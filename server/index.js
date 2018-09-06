@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.post('/signup', (req, res) =>{
 
     console.log(req.body)
-    res.send("Hello WORLD");
+    res.send("Hello WORLDs");
 
 }) 
 
