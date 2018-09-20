@@ -1,18 +1,24 @@
 import React,{Component} from'react';
-import {BrowserRouter as Router,Link} from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-
+import {Link} from 'react-router-dom';
 import styles from './LoginStyle.jsx';
-import axios from 'axios';
-import {connect } from  ' react-redux';
-import AuthAction from '../../store/actions/authAction';
 
-function mapStatetoProps(state){
+import { connect } from  'react-redux';
+
+import AuthMiddleware from '../../store/middleware/authmiddleware';
+import AppBar from './../AppBar/AppBar.js';
+import Navigation from './../Navigation/Navigation.js';
+
+function mapStateToProps(state){
+    return{
     isLogin:state.AuthReducer
 
+    }
 }
 function mapDispatchToProps(dispatch){
- signin:() => dispatch(AuthAction.signin)
+ return {
+ signin:() => dispatch(AuthMiddleware.signin())
+ }
 }
 
 
@@ -27,8 +33,24 @@ class Login extends Component{
 
         }
     }
-    handleSubmit=(e)=>{
-        this.
+    componentWillReciveProps(){
+        if(this.props.isLogin )
+        this.setState({
+            Emial:'',
+            Password:''
+
+        })
+    }
+    handleSubmit(){
+       
+        this.props.signin({
+          "Email " :this.state.user.Email,
+           "Password": this.state.user.Password
+            
+        }
+        
+
+        )
     }
     
     handleChange=(e)=>{
@@ -38,7 +60,10 @@ class Login extends Component{
     }
     render(){
         return(
+            <div>
+                <AppBar/>
         <div style={styles.LoginSep}>
+    
             Login
             <form>
             <TextField
@@ -48,7 +73,7 @@ class Login extends Component{
           onChange={this.handleChange}
           
         />
-                
+                <br/>
                 <TextField
                 placeholder="Enter your Password"
           type="password"
@@ -57,22 +82,25 @@ class Login extends Component{
           
           
         />
+        <br/>
                 
                 <button  onClick={this.handleSubmit}>
-        Send
+        LOGIN
         
       </button>
                 </form>
                 Don,t have an account?
-                <Router>
+                
                     <div>
-                        <Link to="/login/register">Create Your Account
+                        <Link to="/register">Create Your Account
                         </Link>
                         </div>
-                        </Router>
+                        
         
+            </div>
+            <Navigation/>
             </div>
         )
     }
 }
-export default connect(mapStateToProps)(mapDispatchToProps)(Login);
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
