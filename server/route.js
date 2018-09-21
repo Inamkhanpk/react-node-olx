@@ -1,16 +1,16 @@
-const express = require("express");
 
-const api = express.Router();
 
-const User=require('./models/user')
-api.post("/registeration", (req, res) => {
+'use strict';
+module.exports = function(app, router){
     
-    const serverport = new serverport(req.body);
-    serverport.save()
-    .then(serverport => {
-        res.json('Server added successfully');
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database");
-    });
-});
+    const User=require('./models/user')
+    router
+        .route('/register')
+        .post(function(req, res){
+            res.send({
+                message: "You successfully register in application"
+            })
+        });
+}
+
+
