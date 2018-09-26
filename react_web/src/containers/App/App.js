@@ -7,7 +7,7 @@ import DisplayAds from './../DisplayAds/DisplayAds';
 import Navigation from './../Navigation/Navigation';
 
 
-import AppBar from './../AppBar/AppBar';
+import Appbar from './../AppBar/AppBar';
 
 
 
@@ -32,7 +32,7 @@ render() {
     <div>
       
       <div>
-        <AppBar/>
+        <Appbar/>
         </div>
         
         <div>

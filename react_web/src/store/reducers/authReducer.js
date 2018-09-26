@@ -3,6 +3,7 @@ import AuthAction from './../actions/authAction.js';
 const initialState={
     
     isRegistered: false,
+    personInfo:{}
     
 
 }
@@ -10,7 +11,7 @@ const initialState={
 function AuthReducer(state=initialState,action){
     switch(action.type){
         case AuthAction.REGISTER_USER :
-        return {...state};
+        return {...state,isRegistered:true,personInfo:action.payload};
         default :
         return state;
     }

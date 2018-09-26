@@ -1,11 +1,12 @@
 
 import axios from 'axios';
 import AuthAction from "../actions/authAction";
+import toastr from 'toastr';
 
 
  export default class AuthMiddleware{
 
-    static signup(credentials)
+    static registerUser(credentials)
     {
         return (dispatch)=>{
 
@@ -14,7 +15,7 @@ import AuthAction from "../actions/authAction";
         }
     }
     static SendUserOnServer(dispatch,credentials){
-        axios.post('http://localhost:3001/registration',
+        axios.post('http://localhost:3001/registeration',
      credentials.user
         
     )
@@ -22,9 +23,11 @@ import AuthAction from "../actions/authAction";
        console.log("Successfully send on server")
        console.log(res);
        console.log(res.data);
+       toastr.info(res.data);
     })
     .catch((err)=>{
         console.log("Error")
+        toastr.error(err);
     })
     }
  }

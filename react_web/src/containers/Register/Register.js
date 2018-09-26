@@ -15,13 +15,13 @@ import  AuthMiddleware from './../../store/middleware/authmiddleware.js'
 
 function mapStateToProps(state) {
   return {
-    state: state
+    info: state.personInfo
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    registerUser:(user) => dispatch(AuthMiddleware.signup(user))
+    registerUser:(credentials) => dispatch(AuthMiddleware.registerUser(credentials))
   };
 }
 class Register extends Component{
@@ -49,7 +49,7 @@ class Register extends Component{
     }
     
     validateUserFormEntry = ()=>{
-     const {user,errors} = this.state;
+     let {user,errors} = this.state;
      let valid = true;
      
 
@@ -106,13 +106,13 @@ class Register extends Component{
         this.setState({ user });
     
         if (this.state.validateOnChange) {
-          this.validateForm();
+          this.validateUserFormEntry();
         }
       };
 
       
    handleSubmit = () => {
-    if (this.validateUserFormEntry) {
+    if (this.validateUserFormEntry ) {
       this.props.registerUser(this.state.user);
     } else {
       this.setState({ validateOnChange: true,disableSumbitButton:true });
@@ -192,6 +192,7 @@ class Register extends Component{
              <p className="mb-0 text-success">Already Registered? 
              <Link to="login">Login Here</Link></p>
             </form>
+            {this.props.info}
                </div>
             <Navigation/>
          </div>
