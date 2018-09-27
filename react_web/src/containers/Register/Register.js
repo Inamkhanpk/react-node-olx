@@ -36,37 +36,38 @@ class Register extends Component{
                 
             },
             errors:{
-                email: '',
-                password: '',
-                repeatPassword: '',
-                agree: false,
-
+              
+                
             },
-            validateOnChange: false,
-           disableSubmitButton: false,
+            
+           
 
         }
     }
     
-    validateUserFormEntry = ()=>{
-     let {user,errors} = this.state;
+    validateUserFormEntry(){
+     let {user} = this.state;
+     let errors={}
      let valid = true;
      
 
      if (isEmpty(user.email) || !isEmail(user.email)) {
-        errors.email = "Please provide a valid email address";
         valid = false;
+        errors.email = "Please provide a valid email address";
+        
       }
   
       if (isEmpty(user.password) || user.password.length < 8) {
-        errors.password = "Passowrd should be at least 8 characters long";
         valid = false;
+        errors.password = "Passowrd should be at least 8 characters long";
+        
         
       }
   
       if (user.password !== user.repeatPassword) {
-        errors.repeatPassword = "Passwords mismatch";
         valid = false;
+        errors.repeatPassword = "Passwords mismatch";
+        
         
       }
   
@@ -74,16 +75,13 @@ class Register extends Component{
         
       
       if (!user.agree) {
-        errors.agreeText = "You must be agree to terms of use";
         valid = false;
+        errors.agreeText = "You must be agree to terms of use";
+        
       }
   
-      this.setState({ errors });
-      if (valid) {
-        this.setState({ disableSubmitButton: false });
-      } else {
-        this.setState({ disableSubmitButton: true });
-      }
+      this.setState({ errors:errors });
+      
       return valid;
     };
     
@@ -92,10 +90,7 @@ class Register extends Component{
     user[e.target.name] = e.target.value;
     this.setState({ user });
     
-        if (this.state.validateOnChange) {
-          this.validateUserFormEntry();
-        }
-      };
+   }
 
 
 
@@ -105,17 +100,16 @@ class Register extends Component{
         user.agree = checked;
         this.setState({ user });
     
-        if (this.state.validateOnChange) {
-          this.validateUserFormEntry();
-        }
       };
 
       
    handleSubmit = () => {
-    if (this.validateUserFormEntry ) {
+     
+    if (this.validateUserFormEntry()) {
       this.props.registerUser(this.state.user);
+      alert("Register Successful")
     } else {
-      this.setState({ validateOnChange: true,disableSumbitButton:true });
+      alert("Form has errors");
     }
   };
 
@@ -138,9 +132,10 @@ class Register extends Component{
             name="email"
             type="email"
             fullWidth={true}
+            helperText={this.state.errors.email}
             required={true}
             value={this.state.user.email}
-            error={this.state.errors.email? true : false}
+            error={this.state.errors.email?true:false}
             onChange={this.handleChange}
             />
                 
@@ -149,9 +144,10 @@ class Register extends Component{
             name="password"
             type="password"
             fullWidth={true}
+            helperText={this.state.errors.password}
             required={true}
             value={this.state.user.password}
-            error={this.state.errors.password? true : false}
+            error={this.state.errors.password?true:false}
             onChange={this.handleChange}
           />
                 
@@ -160,9 +156,10 @@ class Register extends Component{
             name="repeatPassword"
             type="password"
             fullWidth={true}
+            helperText={this.state.errors.repeatPassword}
             required={true}
             value={this.state.user.repeatPassword}
-            error={this.state.errors.repeatPassword? true : false}
+            error={this.state.errors.repeatPassword?true:false}
             onChange={this.handleChange}
           />
         
@@ -171,7 +168,7 @@ class Register extends Component{
                 <Checkbox
                 
                 value="agree"
-                onChange={this.handleCheckbox}
+                onChange={()=>this.handleCheckbox}
                 /> By registering on OLX,You accept our OLX.com.pk 
                 <Link to="/terms-of-use">Terms of Use</Link>
                 </p>

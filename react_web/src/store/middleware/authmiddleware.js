@@ -10,13 +10,14 @@ import toastr from 'toastr';
     {
         return (dispatch)=>{
 
-            dispatch(AuthAction.register())
+            dispatch(AuthAction.register(credentials))
             AuthMiddleware.SendUserOnServer(dispatch,credentials)
         }
     }
     static SendUserOnServer(dispatch,credentials){
         axios.post('http://localhost:3001/registeration',
-     credentials.user
+        
+     {credentials}
         
     )
     .then((res)=>{
