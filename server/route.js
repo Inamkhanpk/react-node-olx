@@ -1,13 +1,18 @@
 
-module.exports = function(app, router){
-    
-    const User=require('./models/user')
+    const express =require('express');
+    const router =express.Router();
+    const User=require('./models/user');
     router
-        .route('/registeration')
+        .route('http://localhost:3001/registeration')
         .post(function(req, res){
-            console.log(req.body)
-            res.send({
-                message: "You successfully register in application"
+            console.log(req.body);
+            const person =new User(req.body);
+            person.save()
+            .then(res =>{
+                res.json(person);
             })
-        });
-}
+            .catch(err =>{
+                res.status(400).send("unable to save to database");
+            });
+         } );
+         module.exports =  router ;

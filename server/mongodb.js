@@ -1,9 +1,14 @@
 const mongoose = require("mongoose");
+var url = 'mongodb://inam:inamkhan123@ds161322.mlab.com:61322/olx';
 
-const db= require('./config/keys.js').mongoURI
 
-mongoose
-.connect('db')
 
-.then(()=> console.log("MongoDB Connected"))
-.catch(err => console.log(err))
+
+mongoose.connect(url, { useNewUrlParser: true });
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'CONNECTION ERROR :'));
+db.once('open', function () {
+  
+  console.log('CONNECTION OPENED!!')
+  return db;
+});

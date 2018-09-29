@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const User = new Schema({
     email:{
         type: String,
         required: true
@@ -13,12 +13,11 @@ const userSchema = new Schema({
     repeatpassword:{
         type:String,
         required:true
-    }},{
-    collection:'servers'
+    },
     
 
 
 
 });
 
-module.exports =  mongoose.model('userSchema',userSchema);
+module.exports =  mongoose.model('User',User);
