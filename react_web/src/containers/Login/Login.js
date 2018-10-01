@@ -1,10 +1,10 @@
 import React,{Component} from'react';
 import TextField from '@material-ui/core/TextField';
-import {Link} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
 import styles from './LoginStyle.jsx';
-
+import Button from '@material-ui/core/Button';
 import { connect } from  'react-redux';
-
+import {isEmail,isEmpty} from 'validator'
 import AuthMiddleware from '../../store/middleware/authmiddleware';
 import AppBar from './../AppBar/AppBar.js';
 import Navigation from './../Navigation/Navigation.js';
@@ -27,38 +27,69 @@ class Login extends Component{
         super(props)
         this.state={
             user:{
-            Email:'',
-            Password:'',
-            }
+                email: '',
+                password: '',
+                repeatPassword: '',
+                agree: false,
+            },
+            errors:{},
+            validateOnChange:false,
+            authenticated:false,
 
         }
-    }
-    componentWillReciveProps(){
-        if(this.props.isLogin )
-        this.setState({
-            Emial:'',
-            Password:''
-
-        })
-    }
-    handleSubmit(){
-       
-        this.props.signin({
-          "Email " :this.state.user.Email,
-           "Password": this.state.user.Password
-            
-        }
-        
-
-        )
     }
     
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.authenticated !== prevState.authenticated) {
+      return {
+        authenticated: nextProps.authenticated
+      }
+    }
+    return null;
+  }
+    validateUserFormEntry = () => {
+        let { user } = this.state;
+        let errors = {};
+        let valid = true;
+    
+        if (isEmpty(user.email) || !isEmail(user.email)) {
+          errors.email = "Please provide a valid email address";
+          valid = false;
+        }
+    
+        if (isEmpty(user.password) || user.password.length < 8) {
+          errors.password = "Passowrd should be at least 8 characters long";
+          valid = false;
+        }
+    
+        this.setState({ errors });
+        return valid;
+      };
+    
+      handleSubmit = () => {
+        if (this.validateForm()) {
+          this.props.actions.loginUser(this.state.user);
+        } else {
+          this.setState({ validateOnChange: true });
+        }
+      };
+    
     handleChange=(e)=>{
-        this.setState({user:e.target.value
+        let user = this.state.user;
+    user[e.target.name] = e.target.value;
+    this.setState({ user });
 
-        });
+    if (this.state.validateOnChange) {
+      this.validateUserFormEntry();
+    }
     }
     render(){
+        const { from } = this.props.location.state || { from: { pathname: '/' } }
+    if (this.state.authenticated) {
+      return (
+        <Redirect to={from} />
+      )
+    }
         return(
             <div>
                 <AppBar/>
@@ -67,34 +98,41 @@ class Login extends Component{
             Login
             <form>
             <TextField
-            placeholder="Enter Your Email"
-          type="email"
-          value={this.state.user.email}
-          onChange={this.handleChange}
+            label="Email"
+            name="email"
+            type="email"
+            helperText={this.state.errors.email}
+            fullWidth={true}
+            value={this.state.user.email}
+            onChange={this.handleChange}
+            error={this.state.errors.email ? true : false}
           
         />
-                <br/>
-                <TextField
-                placeholder="Enter your Password"
-          type="password"
-          value={this.state.user.password}
-          onChange={this.handleChange}
+                
+               <TextField
+                label="Password"
+                name="password"
+                type="password"
+                helperText={this.state.errors.password}
+                fullWidth={true}
+                 value={this.state.user.password}
+                 error={this.state.errors.password ? true : false}
+                 onChange={this.handleChange}
           
           
-        />
-        <br/>
-                
-                <button  onClick={this.handleSubmit}>
-        LOGIN
-        
-      </button>
-                </form>
-                Don,t have an account?
-                
-                    <div>
-                        <Link to="/register">Create Your Account
-                        </Link>
-                        </div>
+            />
+            <br/>
+           <Button
+            variant="contained" color="primary" 
+            onClick={this.handleSubmit}
+          > Login
+            </Button>
+           </form>
+
+
+                {`Don,t have an account?`}
+                 <Link to="/register">Create Your Account</Link>
+                        
                         
         
             </div>

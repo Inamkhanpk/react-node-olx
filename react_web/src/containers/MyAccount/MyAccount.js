@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import List from '@material-ui/core/List';
 import {Link} from 'react-router-dom';
-import Drawer from '@material-ui/core/Drawer';
+
 import ListItem from '@material-ui/core/ListItem'
 import Appbar from './../AppBar/AppBar.js';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,11 +12,11 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted'
 import Comment from '@material-ui/icons/Comment'
 import Favorite from '@material-ui/icons/Favorite';
 import Navigation from './../Navigation/Navigation.js'
-import Hidden from '@material-ui/core/Hidden'
+
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs.js'
 import { withStyles } from '@material-ui/core/styles';
 //import styles from './MyAccountStyle.jsx';
-import AppBar from '@material-ui/core/AppBar'
+
 
 
 

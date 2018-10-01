@@ -13,6 +13,7 @@ import MyMessages from './containers/MyAccount/MyMessages/MyMessages.js'
 import PostAdPage from './containers/MyAccount/PostAdPage/PostAdPage.js'
 import SavedAds from './containers/MyAccount/SavedAds/SavedAds.js'
 import TermsOfUse from './components/TermsOfUse/TermsOfUse.js'
+import PrivateRoute from './containers/MyAccount/PrivateRoute/PrivateRoute.js'
 
 
 
@@ -26,11 +27,11 @@ ReactDOM.render((
       <Route exact   path="/" component = {App}/>
       <Route exact   path="/login" component = {Login}/>
       <Route exact   path="/register" component = {Register}/>
-      <Route exact   path="/my-account" component = {MyAccount}/>
-      <Route exact  path="/post-your-ad" component ={PostAdPage}/>
-      <Route exact  path="/my-account/ads" component={AdListingPage}/>
-      <Route exact path ="/my-account/messages"component={MyMessages}/>
-      <Route exact path="/my-account/saved-ads" component ={SavedAds}/>
+      <PrivateRoute exact   path="/my-account" component = {MyAccount}/>
+      <PrivateRoute exact  path="/post-your-ad" component ={PostAdPage}/>
+      <PrivateRoute exact  path="/my-account/ads" component={AdListingPage}/>
+      <PrivateRoute exact path ="/my-account/messages"component={MyMessages}/>
+      <PrivateRoute exact path="/my-account/saved-ads" component ={SavedAds}/>
       <Route exact path="/terms-of-use" component={TermsOfUse}/>
            </Switch>
       
