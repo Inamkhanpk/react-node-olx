@@ -24,14 +24,12 @@ const UserRoute = require('./route');
 app.use(cors());
 
 //data must be in json form through  body-parser
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //route use here
-app.use(UserRoute);
-
-
-
+app.use('/',UserRoute);
 
 
  
