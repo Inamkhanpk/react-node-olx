@@ -27,12 +27,12 @@ const AdSchema = new Schema({
     required: true
   },
   uploader: {
-    type: String,
-    
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   image: {
     type: [String],
-    //default: ['image-not-found.png']
+    reqireed:true
   },
   sellerName: {
     type: String,
@@ -47,7 +47,7 @@ const AdSchema = new Schema({
     required: true
   },
   
-},
+},{collection:'ads'}
 );
 
 module.exports = mongoose.model('Ad', AdSchema);

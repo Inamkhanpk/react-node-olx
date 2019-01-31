@@ -1,6 +1,5 @@
 
     const express =require('express');
-    const uuid = require('uuid');
     const router =express.Router();
     const bcrypt = require('bcryptjs');
     const User=require('./models/user');
@@ -46,7 +45,7 @@
                 
 
             const newUser = new User({
-                id:uuid(),
+                
                 email: req.body.credentials.email,
                 password: req.body.credentials.password ,
                 repeatPassword:req.body.credentials.repeatPassword,

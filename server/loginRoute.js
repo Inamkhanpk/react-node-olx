@@ -16,7 +16,8 @@ const validateLoginInput = require('./validation/loginv');
   
  
 
-  router.post('/login', (req, res) => {
+  
+    router.route('/login').post( (req, res) => {
 
     const { errors, isValid } = validateLoginInput(req.body.credentials);
 
@@ -66,11 +67,5 @@ const validateLoginInput = require('./validation/loginv');
         });
 });
 
-/*router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
-  return res.json({
-      id: req.user.id,
-      email: req.user.email,
-      password: req.user.password
-  });
-});*/
+
 module.exports=router;
