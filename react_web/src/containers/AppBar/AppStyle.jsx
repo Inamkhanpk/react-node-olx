@@ -5,11 +5,14 @@ const styles = {
         width:1200,
         height:100,
         borderRadius:10,
+        position:"relative",
+        left:30
                    },
 
    one : {
        marginLeft:700,
        paddingTop:10,
+       
          },
 
    listUpper:{
@@ -24,10 +27,12 @@ const styles = {
     display:'inline-block',
     float:'left',
     marginLeft:10,
+    
             },
 
    btncolor:{
        backgroundColor:'#FA9C05',
+       
            },
 };
 export default styles;

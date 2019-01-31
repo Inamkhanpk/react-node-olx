@@ -5,6 +5,7 @@ import Items from './../Items/Items';
 import Home from './../Home/Home';
 import DisplayAds from './../DisplayAds/DisplayAds';
 import Navigation from './../Navigation/Navigation';
+import PostYourAd from './../../components/PostYourAd/PostYourAd'
 
 
 import Appbar from './../AppBar/AppBar';
@@ -47,6 +48,9 @@ render() {
         <div>
         <DisplayAds/>
         </div>
+        <div>
+          <PostYourAd/>
+          </div>
         <div>
         <Navigation/>
         </div>

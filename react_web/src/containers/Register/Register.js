@@ -13,12 +13,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 
-function mapStateToProps(state) {
-  return {
-    info: state.personInfo
+function mapStateToProps(state){
+  return{
+    person:state.AuthReducer.person,
+    errors1: state.AuthReducer.errors1
   }
 }
-
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -39,7 +39,8 @@ class Register extends Component {
         agree: false,
       },
 
-      errors: {},
+      errors:  {},
+      errors1:false,
       validateOnChange:false,
       
     }
@@ -71,7 +72,7 @@ class Register extends Component {
       errors.agreeText = "You must be agree to terms of use";
     }
 
-    this.setState({ errors:errors });
+    this.setState({ errors});
     return valid;
   };
 
@@ -83,18 +84,16 @@ class Register extends Component {
     if (this.state.validateOnChange) {
       this.validateUserFormEntry();
     }
-
-    
-  };
+};
 
 
   handleCheckbox = (event,checked) => {
     let user = this.state.user;
     user.agree = checked;
     this.setState({ user });
-    
+   
     if (this.state.validateOnChange) {
-      this.validateUserFormEntry();
+     this.validateUserFormEntry();
     }
 
    
@@ -104,19 +103,45 @@ class Register extends Component {
   handleSubmit = () => {
     
     if (this.validateUserFormEntry()) {
-      this.props.registerUser(this.state.user);
-      alert("Register Successful")
-    } 
-    else {
-      this.setState({ validateOnChange: true})
+    
+      this.props.registerUser(this.state.user)
       
+   
     }
+
+  
+ else
+    {
+      this.setState({ validateOnChange: true})
+    }
+    
   };
+
+
+
+  
+ //isko khulna hai or errors server side show krwane hen abi agr me client side ki validation 
+  //hide krta hun tu console krke error show tu ho rhe hen lekin server side k errors show krne hen UI ME
+  static getDerivedStateFromProps(nextProps,prevState){
+    console.log("getDerivedStateFromProps",nextProps.errors1)
+    console.log("getDerivedStateFromProps",prevState.errors1)
+   if(nextProps.errors !== prevState.errors1){
+     return {errors1: nextProps.errors1}
+   }
+   return null
+  }
+
+
+
+
+
+
 
 
 
 
   render() {
+
     return (
       
        <div className="container">
@@ -134,11 +159,19 @@ class Register extends Component {
               type="email"
               fullWidth={true}
               helperText={this.state.errors.email}
+
+             
               required={true}
               value={this.state.user.email}
-              error={this.state.errors.email ? true : false}
+              error={this.state.errors.email ? true : false }
+              // error1 serverside k error show krwane k lye lagaya hai jo abi chal nai rha hai error={this.state.errors1.email ? true : false}
+              
               onChange={this.handleChange}
+              
+            
             />
+            
+           
             </div>
             
             <div className="form-group">
@@ -147,12 +180,18 @@ class Register extends Component {
               name="password"
               type="password"
               fullWidth={true}
+              
               helperText={this.state.errors.password}
               required={true}
               value={this.state.user.password}
+              
               error={this.state.errors.password ? true : false}
               onChange={this.handleChange}
+              
+            
             />
+            
+           
             </div>
 
             <div className="form-group">
@@ -161,12 +200,17 @@ class Register extends Component {
               name="repeatPassword"
               type="password"
               fullWidth={true}
+              
               helperText={this.state.errors.repeatPassword}
               required={true}
               value={this.state.user.repeatPassword}
+              
               error={this.state.errors.repeatPassword ? true : false}
               onChange={this.handleChange}
+              
             />
+            
+            
             </div>
 
             <div className="form-group">

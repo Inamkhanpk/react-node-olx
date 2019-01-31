@@ -5,10 +5,13 @@ const styles = {
         width:1200,
         height:100,
         marginTop:90,
+        marginLeft:10,
         borderRadius:10,
+        position:"relative",
+        left:20
     },
         
-    
+
     list:{
 
         display:'inline-block',
@@ -21,6 +24,14 @@ const styles = {
     
         float:'left'
     },
+    gap:{
+        marginLeft:30,
+        marginTop:0,
+        width:400,
+        display:'inline-block',
+        float:'left'
+
+    }
 
     
 

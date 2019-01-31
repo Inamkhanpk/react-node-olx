@@ -6,10 +6,10 @@ import Breadcrumbs from './../Breadcrumbs/Breadcrumbs.js'
 const breadcrumbs = [
     {
       link: '/my-account',
-      text: 'My Account'
+      text: '/My Account'
     },
     {
-      text: 'My Messages'
+      text: '/My Messages'
     }
   ]
 
@@ -21,9 +21,11 @@ class MyMessages extends Component{
             <div>
                 
                 <Appbar/>
+                <div style={{marginTop:30,marginLeft:30,backgroundColor:'red',height:50,borderRadius:10, padding:10}}>
                 <Breadcrumbs
           breadcrumbs={breadcrumbs}
         />
+        </div>
                 <Navigation/>
                 </div>
         )

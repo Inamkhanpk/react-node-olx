@@ -4,20 +4,22 @@ import {Link,Redirect} from 'react-router-dom';
 import styles from './LoginStyle.jsx';
 import Button from '@material-ui/core/Button';
 import { connect } from  'react-redux';
-import {isEmail,isEmpty} from 'validator'
+import {isEmail,isEmpty} from 'validator';
 import AuthMiddleware from '../../store/middleware/authmiddleware';
 import AppBar from './../AppBar/AppBar.js';
 import Navigation from './../Navigation/Navigation.js';
 
 function mapStateToProps(state){
     return{
-    isLogin:state.AuthReducer
-
+    errors1:state.AuthReducer.errors1,
+    isAuthenticated:state.AuthReducer.isAuthenticated
+    
     }
+    
 }
 function mapDispatchToProps(dispatch){
  return {
- signin:() => dispatch(AuthMiddleware.signin())
+ loginUser:(credentials) => dispatch(AuthMiddleware.loginUser(credentials))
  }
 }
 
@@ -33,21 +35,34 @@ class Login extends Component{
                 agree: false,
             },
             errors:{},
+            errors1:false,
             validateOnChange:false,
-            authenticated:false,
+            isAuthenticated:false,
 
         }
+        
     }
     
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.authenticated !== prevState.authenticated) {
+      console.log("props 1",nextProps.isAuthenticated)
+      console.log("state 2",prevState.isAuthenticated)
+      console.log("props 3",nextProps.errors1)
+      console.log("state 4",nextProps.errors1)
+    if ((nextProps.isAuthenticated !== prevState.isAuthenticated) || (nextProps.errors1 !== prevState.errors1) ) {
+
       return {
-        authenticated: nextProps.authenticated
+        isAuthenticated: nextProps.isAuthenticated,
+        
       }
+      
     }
+
     return null;
   }
-    validateUserFormEntry = () => {
+    
+  
+  
+  validateUserFormEntry = () => {
         let { user } = this.state;
         let errors = {};
         let valid = true;
@@ -67,9 +82,11 @@ class Login extends Component{
       };
     
       handleSubmit = () => {
-        if (this.validateForm()) {
-          this.props.actions.loginUser(this.state.user);
-        } else {
+        if (this.validateUserFormEntry()) {
+            
+          this.props.loginUser(this.state.user);
+         }
+      else {
           this.setState({ validateOnChange: true });
         }
       };
@@ -82,15 +99,31 @@ class Login extends Component{
     if (this.state.validateOnChange) {
       this.validateUserFormEntry();
     }
+
+
     }
+
+
+
+
+
     render(){
-        const { from } = this.props.location.state || { from: { pathname: '/' } }
-    if (this.state.authenticated) {
+        
+
+        //const { from } = this.props.location.state || { from: { pathname: '/my-account'}};
+    const { from } = { from: { pathname: '/my-account'}}
+
+
+    if (this.state.isAuthenticated) {
       return (
         <Redirect to={from} />
+        
       )
+      
     }
-        return(
+        
+    
+    return(
             <div>
                 <AppBar/>
         <div style={styles.LoginSep}>

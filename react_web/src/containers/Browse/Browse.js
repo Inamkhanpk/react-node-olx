@@ -3,28 +3,65 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import styles from './BrowseStyle.jsx';
+import {connect} from 'react-redux';
+import AdMiddleware from '../../store/middleware/admiddleware';
+
+
+function mapStateToProps(state){
+  return{
+    
+  
+
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return{
+    searchAdsLogic:(searchQuery)=>dispatch(AdMiddleware.searchAdsLogic(searchQuery)),
+    filterAdsLogic:(filters)=>dispatch(AdMiddleware.filterAdsLogic(filters))
+
+  }
+}
 
 class Browse extends Component{
     constructor(props){
     super(props)
     this.state={
-        name:[],
-        product:[]
+        category:[],
+        query:[]
+        
     }
 
 }
-handleChange =(e) => {
-    this.setState({name:e.target.value})
-    
-}
-handleProduct=(e) => {
-    this.setState({product:e.target.value})
+
+search = () => {
+  this.props.searchAdsLogic(this.state.query);
 }
 
+
+
+
+
+handleChange =(e) => {
+  
+  
+    this.setState({category: e.target.value},
+      () => { this.props.filterAdsLogic({ category: e.target.value }) })
+      console.log(e.target.value)
+    
+}
+
+handleChanges =(e)=>{
+  this.setState({query:e.target.value})
+}
+
+
+
 render(){
-    const names = [
+    const categories = [
         'Mobiles',
         'Laptops',
         'Clothes',
@@ -41,72 +78,61 @@ render(){
         'Kids'
         
       ];
-      const products=[
-
-      ]
+      
     return(
-<div style={styles.drop}>
-<ul>
-  <li style={styles.list}>
-    <FormControl fullWidth >
-    <InputLabel htmlFor="select-multiple" >
-    Browse Categories
-    </InputLabel>
-    <Select
+      
+        <div style={styles.drop}>
+        <div>
+          <ul>
+        <li style={styles.list}>
+        
+        <FormControl fullWidth >
+        <InputLabel htmlFor="ad-category" >
+         Browse Categories
+        </InputLabel>
+         <Select
             
-            multiple
-            value={this.state.name}
+            name="category"
+            value={this.state.category}
             onChange={this.handleChange}
-            input={<Input id="select-multiple" />}
-            
-          >
-          {names.map(name => (
+            renderValue={value => value}
+            input={<Input id="ad-category" />}
+            >
+          {categories.map(category => (
               <MenuItem
-                key={name}
-                value={name}
-                
-              >
-                {name}
+                key={category}
+                value={category}
+                >
+                {category}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        </li>
-<li style={styles.list}>
-        <FormControl fullWidth>
-    <InputLabel htmlFor="select-multiple" >
-    Search for a Specific Products
-    </InputLabel>
-    <Select
-            
-            multiple
-            autoWidth
-            value={this.state.product}
-            onChange={this.handleProduct}
-            input={<Input id="select-multiple"/>}
-            
-          >
-          {products.map(product => (
-              <MenuItem
-                key={product}
-                value={product}
-                
-              >
-                {product}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        
         </li>
         </ul>
-
-
-        
-
-        
-        
         </div>
-    )
+
+
+
+        <div style={styles.gap}>
+        <TextField
+        label="Search for a specific product"
+        name="query"
+        type="text"
+        // helperText={errors.adTitle}
+        fullWidth={true}
+        onChange={this.handleChanges}
+        value={this.state.query}
+        onKeyDown={(e) => { if (e.keyCode === 13) { this.search(); } }}
+        // error={errors.adTitle ? true : false}
+        required={true}
+        
+      />
+          </div>
+          </div>
+   
+)
 }
 }
-export default Browse;
+export default connect(mapStateToProps,mapDispatchToProps)(Browse);

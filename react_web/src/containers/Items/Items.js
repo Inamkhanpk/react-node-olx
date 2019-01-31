@@ -1,55 +1,57 @@
-import React,{Component} from 'react';
-import styles from './ItemsStyle.jsx';
- class Items extends Component{
-     render(){
-         return(
-             <div style={styles.itemStyle} >
-                 <ul>
-                 <li style={styles.list}>
-             Mobiles()
-             </li>
-             <li style={styles.list}>
-            Laptops()
-            </li>
-            <li style={styles.list}>
-               Clothes()
-               </li>
-               <li style={styles.list}>
-                Vehiles()
-                </li>
-                <li style={styles.list}>
-                 Accessories()
-                 </li>
-                 <li style={styles.list}>
-                  Property()
-                  </li>
-                  <li style={styles.list}>
-                   Bikes()
-                   </li>
-                   <li style={styles.list}>
-                    Electronics()
-                    </li>
-                    <li style={styles.list}>
-                     Jobs()
-                     </li>
-                     <li style={styles.list}> 
-                     Services()
-                     </li>
-                     <li style={styles.list}>
-                      Business()
-                      </li>
-                      <li style={styles.list}>
-                       Furniture() 
-                       </li>
-                       <li style={styles.list}>
-                       Books()
-                       </li>
-                       <li style={styles.list}> 
-                       Kids()
-                       </li>
-                       </ul>
-             </div>
-         )
-     }
- }
- export default Items;
+import React,{Component } from 'react';
+import {connect} from 'react-redux';
+import AdMiddleware  from './../../store/middleware/admiddleware';
+import {Link} from 'react-router-dom';
+import styles from './ItemsStyle'
+
+
+function mapStateToProps(state){
+    return{
+    
+    catCounts:state.AdReducer.catCounts
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+   getCategoriesCountLogic:()=> dispatch(AdMiddleware.getCategoriesCountLogic())
+    }
+}
+
+class Items extends Component{
+    
+         
+
+componentDidMount(){
+   this.props.getCategoriesCountLogic()
+}
+
+  render(){
+    const categories = [
+        'Mobiles', 'Laptops', 'Clothes', 'Vehicles', 
+        'Property', 'Bikes', 'Electronics', 'Jobs', 'Services', 'Business',
+        'Furniture', 'Books', 'Kids','Accessories',
+      ];
+
+    const categoryList = categories.map((category, index) => {
+        return (
+          <li key={index} style={styles.list}>
+          <Link to={`/category/${category}`}>{category}</Link> 
+          <span >({this.props.catCounts[category] ? this.props.catCounts[category] : 0})</span></li>
+        );
+      });
+    return(
+      
+         <div  style={styles.itemStyle}>
+        <ul className="categories-list">
+          {categoryList}
+        </ul>
+      </div>
+    
+    )
+  }
+}
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Items);

@@ -1,43 +1,42 @@
 //Initialize express
 const express = require('express');
 const app = express();
-
-
-
-//bodyparser for post request =>res.body
+const passport = require('passport');
 const bodyParser = require('body-parser');
-
 const cors = require('cors');
 
-//port selection
-const port = process.env.PORT || 3001;
-//Mongodb Connection
+
+app.use(passport.initialize());
+require('./passport')(passport);
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+
+
+
 
 
 require('./mongodb');
 
 
-
-//route define here
 const UserRoute = require('./route');
-
-app.use(cors());
-
-//data must be in json form through  body-parser
-//app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-//route use here
 app.use('/',UserRoute);
 
 
+const UserLogin = require('./loginRoute');
+app.use('/',UserLogin);
+
+const AdUserPost =require('./Routes/AdsRoute');
+app.use('/',AdUserPost)
  
 
 
+const port = process.env.PORT || 3001;
 
-
-  //Server run on port
+  
 app.listen(port, () => {
 console.log('Example app listening on port !',port);
 });

@@ -3,8 +3,52 @@ import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import styles from './AppStyle.jsx';
 import OLX_Logo from './../images/OLX_Logo.jpg'
+import {connect} from 'react-redux';
+import AuthMiddleware from './../../store/middleware/authmiddleware'
+
+
+
+function mapStateToProps(state){
+  return{
+    isAuthenticated: state.AuthReducer.isAuthenticated,
+    
+    }
+}
+
+
+function mapDispatchToProps(dispatch){
+  return {
+  logoutUser:() => dispatch(AuthMiddleware.logoutUser())
+  }
+ }
+
 
 class Appbar extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      isAuthenticated: false,
+
+    }
+  
+  
+  }
+
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    //console.log("getDerivedStateFromProps nextProps",nextProps.authenticated )
+    //console.log("getDerivedStateFromProps prevState",prevState.authenticated)
+    if ((nextProps.isAuthenticated === false || nextProps.isAuthenticated) && nextProps.isAuthenticated !== prevState.isAuthenticated) {
+      return { isAuthenticated: nextProps.isAuthenticated }
+    }
+    return null;
+  }
+
+  handleLogout = () => {
+    this.props.logoutUser();
+  }
+
+
     render(){
     return(
 <div style={styles.containers}>
@@ -39,11 +83,15 @@ class Appbar extends Component {
            <Link  to="/login">Post an Ad</Link>
           
           </Button>
+
           </li>
+          <li>
+          {this.state.isAuthenticated && <span onClick={this.handleLogout} className="btn btn-link"><i className="fa fa-logout"></i> Logout</span>}
+            </li>
           </ul>
           </div>
 </div>)}
         
 };
 
-        export default Appbar;
+        export default connect(mapStateToProps,mapDispatchToProps)(Appbar);

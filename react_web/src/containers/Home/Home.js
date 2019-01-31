@@ -5,7 +5,7 @@ class Home extends Component{
     render(){
         return(
             <div style={styles.homeStyle}>
-        Home >>Pakistan's Classified
+               Home >>Pakistan's Classified
             </div>
         )
     }
