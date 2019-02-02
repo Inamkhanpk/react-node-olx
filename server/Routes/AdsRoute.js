@@ -146,11 +146,12 @@ router.route('/getAllAds').get(function (req, res) {
       
   //getadbyid
 
-  router.route('./getAdById').get(function(req,res){
+  router.route('./getAdByIds').get(function(req,res){
     
-       Ad.findById(adId)
+       Ad.findById(adIdFilter)
         .then((adsId)=>{
           res.json(adsId)
+          console.log(adsId)
         })
         .catch((err)=>{
          console.log(err)
