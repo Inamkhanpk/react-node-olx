@@ -3,7 +3,7 @@ const styles={
         
         backgroundColor:'#CCDBD6',
         width:1200,
-        height:140,
+        height:100,
         borderRadius:10,
         
         

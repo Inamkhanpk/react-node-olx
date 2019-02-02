@@ -21,7 +21,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return{
-   getAdById :(adId)=>dispatch(AdMiddleware.getAdById(adId))
+   getAdByIdServer :(id)=>dispatch(AdMiddleware.getAdByIdServer(id))
    //adViewLater:(adId) =>dispatch(Admiddleware.adViewLater(adId))
    //sendMessage :(contactMessage)=>dispatch(AdMiddleware.sendMessage(contactMessage))
   }
@@ -35,7 +35,7 @@ class SingleListingPage extends Component {
   constructor(props){
     super(props)
     this.state={
-      ad:this.props.match.params.adId,
+     ads:false,
       openMessageDialog: false,
       contactToSeller: resetContact(),
       contactToSellerErrors: resetContact(),
@@ -83,12 +83,9 @@ class SingleListingPage extends Component {
 
   componentDidMount() {
     console.log("componentDidMount",this.props)
-/*if (!this.state.ad) {*/
-      //getAdById({adId:this.state.ad})
-        /*.then(ad => {
-          this.setState({ ad: ad });
-        }).catch(err => console.error(err));
-    }*/
+
+      this.props.getAdByIdServer(this.props.match.params.adId)
+        
   }
 
 
@@ -115,6 +112,20 @@ class SingleListingPage extends Component {
     this.props.adViewLater(adId);
   };
 
+  static getDerivedStateFromProps(nextProps){
+    if(nextProps.ads !==prevState.ads)
+    {
+      return {
+        ads:nextpProps.ads
+      }
+    }
+
+  }
+  componentShouldUpdate(){
+    if(this.state.ads){
+      this.state.ads.filter((ad)=>ad._id === this.props.match.params.adId)
+    }
+  }
   handleSubmitContactForm = () => {
     if (!this.validateContactForm()) {
       return this.setState({ validateOnChange: true });
@@ -126,17 +137,19 @@ class SingleListingPage extends Component {
     this.handleCloseMessageDialog();
   };
 
+  
   render(){
-   const {adById} = this.props
+    
+    
      const {openMessageDialog,contactToSellerErrors,contactToSeller}= this.state
 
     const breadcrumbs = [
       {
-        link: `/category/${adById.category}`,
-        text: adById.category
+        link: `/category/${ad.category}`,
+        text: ad.category
       },
       {
-        text: adById.title
+        text: ad.title
       }
     ]
 
@@ -150,27 +163,28 @@ class SingleListingPage extends Component {
           breadcrumbs={breadcrumbs}
         />
 
-
-            <h2>{adById.title}</h2>
+{this.props.ads.filter((ad) => ad._id === this.props.parmas.adId)}
+  
+            <h2>{ad.title}</h2>
                   <div >
                     <ul >
-                      <li ><i ></i> {adById.itemCity}</li>
+                      <li ><i ></i> {ad.itemCity}</li>
                       <li ><span className="text-muted">|</span></li>
                       <li ><i ></i> added on {/*adDate*/}</li>
-                      <li >Ad ID: {adById._id.substring(adById._id.length - 8)}</li>
+                      <li >Ad ID: {ad._id.substring(ad._id.length - 8)}</li>
                     </ul>
                   </div>
 
                    <div >
                       <ul >
-                        <li >Model: {adById.model}</li>
-                        <li >Condition: {adById.condition}</li>
+                        <li >Model: {ad.model}</li>
+                        <li >Condition: {ad.condition}</li>
                       </ul>
                     </div>
 
-                    <div >{adById.description}</div>
+                    <div >{ad.description}</div>
 
-                <span className="item-price">Rs. {adById.price}</span>
+                <span className="item-price">Rs. {ad.price}</span>
                 
 
                  <img className="img-fluid" /*src={userIcon}*/ /*alt={ad.sellerName}*/ />
@@ -179,13 +193,13 @@ class SingleListingPage extends Component {
                       <p className="text-muted">
                         (Member since {/*memberSince*/})
                     </p>
-                      <Link to={`/user-ads/${adById.uploader._id}`}>User Ads</Link>
+                      <Link to={`/user-ads/${ad.uploader._id}`}>User Ads</Link>
 
 
                       <h3>Seller Information</h3>
                       <span className="text-muted">
-                        Name: {adById.sellerName} <br/>
-                        Phone: {adById.sellerPhoneNumber}
+                        Name: {ad.sellerName} <br/>
+                        Phone: {ad.sellerPhoneNumber}
                       </span>
 
                       <h3 className="text-center">Safety Tips for Buyers</h3>

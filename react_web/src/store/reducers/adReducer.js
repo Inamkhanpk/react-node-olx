@@ -11,11 +11,11 @@ const initialState={
     catCounts:[],
     totalAdsCount:[],
     queryData:[],
-    filterCategory:[],
+    filterCategory:{},
     resetForm:false,
     myAds:[],
     savedAds:[],
-    adById:[]
+
     
     
     
@@ -47,7 +47,7 @@ function AdReducer(state=initialState,action){
         case AdAction.LOAD_SAVED_MY_ADS:
         return {...state,savedAds:action.payload}
         case AdAction.GET_AD_BY_ID_SUCCESS :
-        return {...state,adById:action.payload}
+        return {...state,ads:action.payload}
         default :
         return state;
 

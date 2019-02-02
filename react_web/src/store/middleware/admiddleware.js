@@ -209,14 +209,14 @@ static getLoadSavedAdsLogic(dispatch,filters){
 
 
 
-static getAdById(){
+static getAdByIdServer(id){
     return (dispatch)=>{
         AdAction.getAdById()
-        AdMiddleware.getAdByIdFromServer(dispatch)
+        AdMiddleware.getAdByIdFromServer(dispatch,id)
     }
 }
-static getAdByIdFromServer(dispatch){
-    axios.get('http://localhost:3001/getAdById')
+static getAdByIdFromServer(dispatch,id){
+    axios.get('http://localhost:3001/getAdByIds',{id})
     .then(res => {
         console.log(res)
         console.log(res.data)

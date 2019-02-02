@@ -1,6 +1,6 @@
 const styles = {
     homeStyle : {
-        marginLeft:30,
+        marginLeft:80,
         marginTop:20
        
 

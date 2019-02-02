@@ -127,10 +127,10 @@ export default class AdAction{
         type:AdAction.GET_AD_BY_ID
       }
     }
-    static getAdByIdSuccess(adById){
+    static getAdByIdSuccess(ads){
       return {
         type:AdAction.GET_AD_BY_ID_SUCCESS,
-        payload:adById
+        payload:ads
       }
 
     }  

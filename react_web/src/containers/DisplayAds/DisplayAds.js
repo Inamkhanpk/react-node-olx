@@ -66,7 +66,8 @@ componentDidMount(){
 }
 
  componentDidUpdate(){
-   console.log("componentDidUpdate",this.props.filterCategory)
+  console.log("componentDidUpdate",this.props.filterCategory)
+
    console.log("componentDidUpdate",this.props.totalAdsCount)
    console.log("componentDidUpdate",this.props.catCounts)
    console.log("componentDidUpdate",this.props.queryData)
@@ -85,7 +86,7 @@ componentDidMount(){
     console.log("render 6",this.state)
     console.log("render 7",this.props)
   
-const pageTitle = `Displaying ${this.props.filterCategory? this.props.filterCategory : `All` } Ads`
+const pageTitle = `Displaying ${this.props.filterCategory.category? this.props.filterCategory.category: `All` } Ads`
   
     
          const adsListings = this.state.ads.map((ad,index) => {
@@ -123,9 +124,9 @@ const pageTitle = `Displaying ${this.props.filterCategory? this.props.filterCate
 
 
     return(
-        <div>
+        <div className="container">
         <h2 >{pageTitle}</h2>
-        We found {this.props.filterCategory.length?this.props.filterCategory.length :this.props.totalAdsCount } items
+        We found {this.props.filterCategory.length?this.props.filterCategory.length :this.state.ads.length} items
         {adsListings}
         
       </div>

@@ -1,7 +1,7 @@
 const styles = {
     containers : {
         
-        backgroundColor:'#BFC5C7',
+       // backgroundColor:'#BFC5C7',
         width:1200,
         height:100,
         borderRadius:10,
@@ -11,7 +11,7 @@ const styles = {
 
    one : {
        marginLeft:700,
-       paddingTop:10,
+       paddingTop:30,
        
          },
 
@@ -19,7 +19,7 @@ const styles = {
        display:'inline-block',
        float:'left',
        margin:10,
-       padding:10,
+       padding:20,
 
              },
 
@@ -27,6 +27,7 @@ const styles = {
     display:'inline-block',
     float:'left',
     marginLeft:10,
+
     
             },
 
@@ -34,5 +35,10 @@ const styles = {
        backgroundColor:'#FA9C05',
        
            },
+
+    logo:{
+        marginTop:-20,
+        marginLeft:-50
+    }       
 };
 export default styles;

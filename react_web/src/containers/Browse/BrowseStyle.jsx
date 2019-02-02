@@ -16,7 +16,7 @@ const styles = {
 
         display:'inline-block',
         
-        width:400,
+        width:500,
         
         
         
@@ -27,7 +27,7 @@ const styles = {
     gap:{
         marginLeft:30,
         marginTop:0,
-        width:400,
+        width:600,
         display:'inline-block',
         float:'left'
 

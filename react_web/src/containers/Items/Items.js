@@ -27,6 +27,8 @@ componentDidMount(){
 }
 
   render(){
+    console.log(this.props.catCounts)
+    
     const categories = [
         'Mobiles', 'Laptops', 'Clothes', 'Vehicles', 
         'Property', 'Bikes', 'Electronics', 'Jobs', 'Services', 'Business',

@@ -55,10 +55,12 @@ class Appbar extends Component {
      <div>
       <ul>
        <li style={styles.listUpper}> 
+       <div style={styles.logo}>
         <img src={OLX_Logo}  
         alt={OLX_Logo} 
         height="80" 
         width="100"/> 
+        </div>
         </li>
        <li style={styles.listUpper}>
         <h3>Pakistan's Largest Marketplace</h3>
