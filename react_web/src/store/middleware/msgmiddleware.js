@@ -13,7 +13,7 @@ export default class MsgMiddleware{
     }
 
     static sendMessageOnServer(dispatch,contactMessage){
-        axios.post('http://localhost:3001/registeration',{contactMessage})
+        axios.post('http://localhost:3001/sendMessage',{contactMessage})
         .then(res => {
             let receiverId = contactMessage.receiver;
             let notification = {
@@ -22,7 +22,7 @@ export default class MsgMiddleware{
               //badge: `${url}assets/img/olx-logo.png`,
               //icon: `${url}assets/img/olx-logo.png`,
             };
-            //dispatch(notificationActions.sendNotification(receiverId, notification));
+            dispatch(notificationAction.sendNotification(receiverId, notification));
             toastr.info(res.data);
           })
           .catch(err => {

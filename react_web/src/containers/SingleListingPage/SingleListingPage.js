@@ -35,7 +35,7 @@ class SingleListingPage extends Component {
   constructor(props){
     super(props)
     this.state={
-     ads:false,
+      ads:false,
       openMessageDialog: false,
       contactToSeller: resetContact(),
       contactToSellerErrors: resetContact(),
@@ -112,11 +112,11 @@ class SingleListingPage extends Component {
     this.props.adViewLater(adId);
   };
 
-  static getDerivedStateFromProps(nextProps){
+  static getDerivedStateFromProps(nextProps,prevState){
     if(nextProps.ads !==prevState.ads)
     {
       return {
-        ads:nextpProps.ads
+        ads:nextProps.ads
       }
     }
 
@@ -139,7 +139,7 @@ class SingleListingPage extends Component {
 
   
   render(){
-    
+    const {ad}=this.state
     
      const {openMessageDialog,contactToSellerErrors,contactToSeller}= this.state
 
@@ -163,7 +163,7 @@ class SingleListingPage extends Component {
           breadcrumbs={breadcrumbs}
         />
 
-{this.props.ads.filter((ad) => ad._id === this.props.parmas.adId)}
+{/*this.props.ads.filter((ad) => ad._id === this.props.parmas.adId)*/}
   
             <h2>{ad.title}</h2>
                   <div >

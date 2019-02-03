@@ -16,7 +16,8 @@ export default class AdAction{
     static GET_AD_BY_ID ='GET_AD_BY_ID'
     static GET_AD_BY_ID_SUCCESS ='GET_AD_BY_ID_SUCCESS'
     static AD_VIEW_LATER ='AD_VIEW_LATER'
-    
+    static DELETE_AD = 'DELETE_AD'
+    static REMOVE_SAVED_AD ='REMOVE_SAVED_AD'
 
 
 
@@ -139,6 +140,22 @@ export default class AdAction{
       return {
         type:AdAction.AD_VIEW_LATER,
         payload:adId
+      }
+    }
+
+    static deleteAd(adId) {
+      return {
+        type: AdAction.DELETE_AD,
+        payload: adId
+      }
+    }
+
+
+    static removeSaved(adId) {
+      return {
+        type: AdAction.REMOVE_SAVED_AD,
+        payload: adId
+    
       }
     }
 
